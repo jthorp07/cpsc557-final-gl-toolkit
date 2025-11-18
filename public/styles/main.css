@@ -1,0 +1,26 @@
+/*
+    Styles for a basic WebGL display page.
+*/
+
+:root {
+    /* Light Theme */
+    --light-bg-color: #CCCCCC;
+    --light-text-color: #000000;
+    /* Dark Theme */
+    --dark-bg-color: #151515;
+    --dark-text-color: #DDDDDD;
+}
+
+body {
+    font-family: sans-serif;
+}
+
+body .dark {
+    background-color: var(--dark-bg-color);
+    color: var(--dark-text-color);
+}
+
+button {
+    margin: 0, 1rem;
+    border-radius: 3px;
+}
