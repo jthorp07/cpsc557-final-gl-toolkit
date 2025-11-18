@@ -75,6 +75,10 @@ export class Vector2 extends Float32Array {
     clone() {
         return new Vector2(this.x, this.y);
     }
+
+    override toString() {
+        return `{${this.x}, ${this.y}}`;
+    }
 }
 
 /**
@@ -243,6 +247,10 @@ export class Vector3 extends Float32Array {
     clone() {
         return new Vector3(this.x, this.y, this.z);
     }
+
+    override toString() {
+        return `{${this.x}, ${this.y}, ${this.z}}`;
+    }
 }
 
 /**
@@ -348,6 +356,10 @@ export class Vector4 extends Float32Array {
     multiplyWithMatrix(matrix: Matrix4) {
         const [x, y, z, w] = matrix.rows();
         return new Vector4(this.dot(x), this.dot(y), this.dot(z), this.dot(w));
+    }
+
+    override toString() {
+        return `{${this.x}, ${this.y}, ${this.z}, ${this.w}}`;
     }
 }
 

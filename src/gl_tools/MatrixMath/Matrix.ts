@@ -217,6 +217,10 @@ export class Matrix3 extends Float32Array {
     static index(row: number, column: number) {
         return (column * 3) + row;
     }
+
+    override toString() {
+        return `[\n ${this.rows().map(row => `${row}`).join("\n ")}\n]`;
+    }
 }
 
 /**
@@ -559,5 +563,9 @@ export class Matrix4 extends Float32Array {
      */
     static index(row: number, column: number) {
         return (column * 4) + row;
+    }
+
+    override toString() {
+        return `[\n ${this.rows().map(row => `${row}`).join("\n ")}\n]`;
     }
 }
