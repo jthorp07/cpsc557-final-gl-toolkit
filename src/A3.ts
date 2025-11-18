@@ -9,7 +9,6 @@ const ROTATE_Z_ID = "rotateZButton" as const;
 const DOWNLOAD_VERTEX_SHADER = "downloadVertexShader" as const;
 const DOWNLOAD_FRAGMENT_SHADER = "downloadFragmentShader" as const;
 
-
 window.onload = async () => {
 
     // Initialize Scene and Attach Controls

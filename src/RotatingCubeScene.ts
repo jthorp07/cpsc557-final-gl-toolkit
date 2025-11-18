@@ -1,4 +1,4 @@
-import { GLContext, Scene, Cube, GLVersion, GLColor, Vector3 } from "./gl_tools/index.js";
+import { Scene, Cube, GLVersion, GLColor, Vector3 } from "./gl_tools/index.js";
 
 // Control Variables
 const RotationAxes = {
