@@ -12,7 +12,17 @@ import {
 } from "../language/GLSLGrammar.js";
 import { PrimitiveLiteral } from "../language/PrimitiveLiteral.js";
 
+/**
+ * @class GenericFragmentShaderBuilder
+ * 
+ * @brief Builder for the generic fragment shader
+ */
 class GenericFragmentShaderBuilder extends FragmentShaderBuilder {
+    /**
+     * @brief Creates a new GenericFragmentShaderBuilder
+     * 
+     * @param version GLSL version
+     */
     constructor(version: GLVersion) {
         super(version);
         this.addPrecisionStatement("mediump", "float")
@@ -27,6 +37,7 @@ class GenericFragmentShaderBuilder extends FragmentShaderBuilder {
             .addUniform("shininess", "float")
             .addUniform("useTexture", "bool")
             .addUniform("useVertexColor", "bool")
+            .addUniform("globalAlpha", "float")
             .addUniform("textureSampler", "sampler2D");
 
         const varyingVariables = this.varyings.map(varying => {
@@ -238,10 +249,15 @@ class GenericFragmentShaderBuilder extends FragmentShaderBuilder {
                         "vec4",
                         [
                             new VariableExpression("vec3", "finalColor"),
-                            new PropertyExpression(
+                            new ArithmeticExpression(
                                 "float",
-                                new VariableExpression("vec4", "baseColor"),
-                                "a"
+                                new PropertyExpression(
+                                    "float",
+                                    new VariableExpression("vec4", "baseColor"),
+                                    "a"
+                                ),
+                                new VariableExpression("float", "globalAlpha"),
+                                "*"
                             )
                         ]
                     )
@@ -250,6 +266,12 @@ class GenericFragmentShaderBuilder extends FragmentShaderBuilder {
     }
 }
 
+/**
+ * @brief Creates a generic fragment shader
+ * 
+ * @param version GLSL version
+ * @returns The created Shader object
+ */
 export function makeGenericFragmentShader(version: GLVersion) {
     return new GenericFragmentShaderBuilder(version).build();
 }
