@@ -12,7 +12,17 @@ import {
 } from "../language/GLSLGrammar.js";
 import { PrimitiveLiteral } from "../language/PrimitiveLiteral.js";
 
+/**
+ * @class GenericVertexShaderBuilder
+ * 
+ * @brief Builder for the generic vertex shader
+ */
 class GenericVertexShaderBuilder extends VertexShaderBuilder {
+    /**
+     * @brief Creates a new GenericVertexShaderBuilder
+     * 
+     * @param version GLSL version
+     */
     constructor(version: GLVersion) {
         super(version);
 
@@ -41,76 +51,82 @@ class GenericVertexShaderBuilder extends VertexShaderBuilder {
         })
         const globalVariables = attributeVariables.concat(varyingVariables).concat(uniformVariables);
         this.setMain(
-                new VertexShaderMainBuilder(globalVariables).declareLocalVariable(
+            new VertexShaderMainBuilder(globalVariables).declareLocalVariable(
+                "vec4",
+                "worldPosition",
+                new ArithmeticExpression(
                     "vec4",
-                    "worldPosition",
-                    new ArithmeticExpression(
-                        "vec4",
-                        new VariableExpression("mat4", "modelMatrix"),
-                        new InvokationExpression(
-                            "vec4",
-                            "vec4",
-                            [
-                                new VariableExpression("vec3", "vertexPosition"),
-                                new LiteralExpression("float", PrimitiveLiteral.float(1.0))
-                            ]
-                        ),
-                        "*"
-                    )
-                ).assignGLPosition(
-                    new ArithmeticExpression(
-                        "vec4",
-                        new ArithmeticExpression(
-                            "mat4",
-                            new VariableExpression("mat4", "projectionMatrix"),
-                            new VariableExpression("mat4", "viewMatrix"),
-                            "*"
-                        ),
-                        new VariableExpression("vec4", "worldPosition"),
-                        "*"
-                    )
-                ).assignVariable(
-                    "fragmentPosition",
+                    new VariableExpression("mat4", "modelMatrix"),
                     new InvokationExpression(
-                        "vec3",
-                        "vec3",
+                        "vec4",
+                        "vec4",
                         [
-                            new PropertyExpression(
-                                "vec3",
-                                new VariableExpression(
-                                    "vec4",
-                                    "worldPosition"
-                                ),
-                                "xyz"
-                            )
-                        ],
-
-                    )
-                ).assignVariable(
-                    "fragmentNormal",
-                    new InvokationExpression(
-                        "vec3",
-                        "normalize",
-                        [
-                            new ArithmeticExpression(
-                                "vec3",
-                                new VariableExpression("mat3", "normalMatrix"),
-                                new VariableExpression("vec3", "vertexNormal"),
-                                "*"
-                            )
+                            new VariableExpression("vec3", "vertexPosition"),
+                            new LiteralExpression("float", PrimitiveLiteral.float(1.0))
                         ]
-                    )
-                ).assignVariable(
-                    "fragmentTextureCoordinate",
-                    new VariableExpression("vec2", "textureCoordinate")
-                ).assignVariable(
-                    "fragmentColor",
-                    new VariableExpression("vec4", "vertexColor")
+                    ),
+                    "*"
                 )
-            );
+            ).assignGLPosition(
+                new ArithmeticExpression(
+                    "vec4",
+                    new ArithmeticExpression(
+                        "mat4",
+                        new VariableExpression("mat4", "projectionMatrix"),
+                        new VariableExpression("mat4", "viewMatrix"),
+                        "*"
+                    ),
+                    new VariableExpression("vec4", "worldPosition"),
+                    "*"
+                )
+            ).assignVariable(
+                "fragmentPosition",
+                new InvokationExpression(
+                    "vec3",
+                    "vec3",
+                    [
+                        new PropertyExpression(
+                            "vec3",
+                            new VariableExpression(
+                                "vec4",
+                                "worldPosition"
+                            ),
+                            "xyz"
+                        )
+                    ],
+
+                )
+            ).assignVariable(
+                "fragmentNormal",
+                new InvokationExpression(
+                    "vec3",
+                    "normalize",
+                    [
+                        new ArithmeticExpression(
+                            "vec3",
+                            new VariableExpression("mat3", "normalMatrix"),
+                            new VariableExpression("vec3", "vertexNormal"),
+                            "*"
+                        )
+                    ]
+                )
+            ).assignVariable(
+                "fragmentTextureCoordinate",
+                new VariableExpression("vec2", "textureCoordinate")
+            ).assignVariable(
+                "fragmentColor",
+                new VariableExpression("vec4", "vertexColor")
+            )
+        );
     }
 }
 
+/**
+ * @brief Creates a generic vertex shader
+ * 
+ * @param version GLSL version
+ * @returns The created Shader object
+ */
 export function makeGenericVertexShader(version: GLVersion) {
     return new GenericVertexShaderBuilder(version).build();
 }

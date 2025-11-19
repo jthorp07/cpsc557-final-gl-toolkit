@@ -16,25 +16,29 @@ function clamp(value: number, min: number, max: number) {
  */
 export class GLColor extends Vector4 {
 
-    // Static accessors for common colors
     static get Red() { return new GLColor(1.0, 0.0, 0.0, 1.0); };
     static get Green() { return new GLColor(0.0, 1.0, 0.0, 1.0) };
     static get Blue() { return new GLColor(0.0, 0.0, 1.0, 1.0); };
-    static get White() { return new GLColor(1.0, 1.0, 1.0, 1.0); }
+    static get White() { return new GLColor(1.0, 1.0, 1.0, 1.0); };
     static get Black() { return new GLColor(0.0, 0.0, 0.0, 1.0); };
     static get Yellow() { return new GLColor(1.0, 1.0, 0.0, 1.0); };
     static get Cyan() { return new GLColor(0.0, 1.0, 1.0, 1.0); };
     static get Magenta() { return new GLColor(1.0, 0.0, 1.0, 1.0); };
 
     // Property accessors and mutators
+    /** @brief Red component */
     get red(): number { return this[0] };
     set red(val: number) { this[0] = val; };
+    /** @brief Green component */
     get green(): number { return this[1] };
     set green(val: number) { this[1] = val; };
+    /** @brief Blue component */
     get blue(): number { return this[2]; };
     set blue(val: number) { this[2] = val; };
+    /** @brief Alpha component */
     get alpha(): number { return this[3]; };
     set alpha(val: number) { this[3] = val; };
+    /** @brief Returns the RGB components as a Vector3 */
     get rgb() { return new Vector3(this.red, this.green, this.blue); };
 
     /**
@@ -44,7 +48,6 @@ export class GLColor extends Vector4 {
      */
     setHexCode(hexcode: string) {
         if (hexcode.length !== 8) throw new Error("Color hex strings must be of length 8");
-
     }
 
     /**
