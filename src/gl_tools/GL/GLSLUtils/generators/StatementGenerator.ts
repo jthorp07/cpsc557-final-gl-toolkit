@@ -1,13 +1,24 @@
 /**
- * @file ExpressionBuilder.ts
+ * @file StatementGenerator.ts
  * 
  * @brief Codegen for GLSL statements
  */
 
 import { BaseExpression, Statement } from "../language/GLSLGrammar.js";
 
+/**
+ * @class StatementGenerator
+ * 
+ * @brief Generator for GLSL statements and expressions
+ */
 export class StatementGenerator {
 
+    /**
+     * @brief Generates a string representation of a statement
+     * 
+     * @param statement The statement to generate
+     * @returns The generated statement string
+     */
     static generateStatement(statement: Statement): string {
 
         if (statement.isDeclaration()) {
@@ -42,6 +53,12 @@ export class StatementGenerator {
         throw new Error("Unsupported Statement Type");
     }
 
+    /**
+     * @brief Generates a string representation of an expression
+     * 
+     * @param expression The expression to generate
+     * @returns The generated expression string
+     */
     private static generateExpression(expression: BaseExpression): string {
 
         if (expression.isVariable()) {

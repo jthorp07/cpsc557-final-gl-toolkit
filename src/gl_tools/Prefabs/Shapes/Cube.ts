@@ -93,11 +93,11 @@ function cubeRelativeIndices() {
         12, 13, 14,
         12, 14, 15,
         // Facing +Y
-        16, 17, 18,
-        16, 18, 19,
+        16, 18, 17,
+        16, 19, 18,
         // Facing -Y
-        20, 21, 22,
-        20, 22, 23
+        20, 22, 21,
+        20, 23, 22
     ];
 }
 
@@ -149,8 +149,18 @@ function cubeDuplicateVertexIndices() {
     ];
 }
 
+/**
+ * @class Cube
+ * 
+ * @brief A cubic shape
+ */
 export class Cube extends BaseShape {
-    
+
+    /**
+     * @brief Creates a new Cube
+     * 
+     * @param sideLength Length of each side of the cube
+     */
     constructor(sideLength: number = 1.0) {
         const halfLength = sideLength / 2;
         super(
@@ -161,6 +171,11 @@ export class Cube extends BaseShape {
         );
     }
 
+    /**
+     * @brief Sets the colors of the cube's vertices
+     * 
+     * @param colors Array of colors. Can be 8 (one per corner) or 24 (one per vertex)
+     */
     override setVertexColors(colors: GLColor[]): void {
 
         const numColors = colors.length;

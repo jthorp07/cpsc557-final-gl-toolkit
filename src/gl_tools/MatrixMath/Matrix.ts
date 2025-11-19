@@ -23,36 +23,45 @@ export class Matrix3 extends Float32Array {
         1   4   7
         2   5   8
     */
+    /**
+     * @brief Creates a new matrix initialized with zeros
+     */
     constructor() {
         super(9);
     }
 
-    set rowOne(row: Vector3) { 
+    /** @brief Sets the first row */
+    set rowOne(row: Vector3) {
         this[Matrix3.ROW_ONE_INDICES[0]] = row.x
         this[Matrix3.ROW_ONE_INDICES[1]] = row.y
         this[Matrix3.ROW_ONE_INDICES[2]] = row.z
     }
-    set rowTwo(row: Vector3) { 
+    /** @brief Sets the second row */
+    set rowTwo(row: Vector3) {
         this[Matrix3.ROW_TWO_INDICES[0]] = row.x
         this[Matrix3.ROW_TWO_INDICES[1]] = row.y
         this[Matrix3.ROW_TWO_INDICES[2]] = row.z
     }
-    set rowThree(row: Vector3) { 
+    /** @brief Sets the third row */
+    set rowThree(row: Vector3) {
         this[Matrix3.ROW_THREE_INDICES[0]] = row.x
         this[Matrix3.ROW_THREE_INDICES[1]] = row.y
         this[Matrix3.ROW_THREE_INDICES[2]] = row.z
     }
-    set columnOne(column: Vector3) { 
+    /** @brief Sets the first column */
+    set columnOne(column: Vector3) {
         this[Matrix3.COLUMN_ONE_INDICES[0]] = column.x
         this[Matrix3.COLUMN_ONE_INDICES[1]] = column.y
         this[Matrix3.COLUMN_ONE_INDICES[2]] = column.z
     }
-    set columnTwo(column: Vector3) { 
+    /** @brief Sets the second column */
+    set columnTwo(column: Vector3) {
         this[Matrix3.COLUMN_TWO_INDICES[0]] = column.x
         this[Matrix3.COLUMN_TWO_INDICES[1]] = column.y
         this[Matrix3.COLUMN_TWO_INDICES[2]] = column.z
     }
-    set columnThree(column: Vector3) { 
+    /** @brief Sets the third column */
+    set columnThree(column: Vector3) {
         this[Matrix3.COLUMN_THREE_INDICES[0]] = column.x
         this[Matrix3.COLUMN_THREE_INDICES[1]] = column.y
         this[Matrix3.COLUMN_THREE_INDICES[2]] = column.z
@@ -110,7 +119,7 @@ export class Matrix3 extends Float32Array {
 
     /**
      * @brief Transforms this to an identity matrix in-place,
-     *        then returns itself to allow chaining calls.
+     *        then returns itself to allow chaining calls
      * 
      * @returns this for chaining
      */
@@ -123,7 +132,7 @@ export class Matrix3 extends Float32Array {
     }
 
     /**
-     * @brief Makes a new matrix that is the product of this and another matrix.
+     * @brief Makes a new matrix that is the product of this and another matrix
      * 
      * @param other Matrix to multiply this with
      * 
@@ -143,6 +152,12 @@ export class Matrix3 extends Float32Array {
         return newMatrix;
     }
 
+    /**
+     * @brief Multiplies this matrix by a vector
+     * 
+     * @param vector Vector to multiply
+     * @returns Resulting vector
+     */
     multiplyVector(vector: Vector3) {
         const rows = this.rows();
         return new Vector3(
@@ -152,6 +167,11 @@ export class Matrix3 extends Float32Array {
         );
     }
 
+    /**
+     * @brief Calculates the determinant of this matrix
+     * 
+     * @returns Determinant
+     */
     determinant() {
 
         let determinant = 0;
@@ -161,6 +181,13 @@ export class Matrix3 extends Float32Array {
         return determinant;
     }
 
+    /**
+     * @brief Calculates the minor of a matrix element
+     * 
+     * @param row Row index
+     * @param column Column index
+     * @returns Minor
+     */
     minor(row: number, column: number) {
 
         this.validateIndices(row, column);
@@ -181,6 +208,11 @@ export class Matrix3 extends Float32Array {
         return sign * this.minor(row, column);
     }
 
+    /**
+     * @brief Calculates the inverse of this matrix
+     * 
+     * @returns The inverse matrix
+     */
     inverse() {
         const determinant = this.determinant();
         if (Math.abs(determinant) <= Number.EPSILON) throw new Error("Cannot invert a singular matrix");
@@ -193,6 +225,11 @@ export class Matrix3 extends Float32Array {
         return inverse;
     }
 
+    /**
+     * @brief Transposes this matrix
+     * 
+     * @returns The transposed matrix
+     */
     transpose() {
         const transposed = new Matrix3();
         for (let row = 0; row < 3; ++row) {
@@ -226,10 +263,18 @@ export class Matrix3 extends Float32Array {
 /**
  * @brief A 4x4 matrix class represented in a WebGL-compatible manner
  *        with methods to assist with common geometric transformations
- *        and other graphics-related functionality.
+ *        and other graphics-related functionality
  */
 export class Matrix4 extends Float32Array {
 
+    /**
+     * @brief Creates a look-at matrix
+     * 
+     * @param eyePosition Position of the camera
+     * @param targetPosition Position the camera is looking at
+     * @param cameraUp Up vector for the camera
+     * @returns A look-at matrix
+     */
     static lookAt(eyePosition: Vector3, targetPosition: Vector3, cameraUp: Vector3 = Vector3.NormalY) {
         const forward = eyePosition.subtract(targetPosition).normalized(true);
         const right = cameraUp.cross(forward).normalized(true);
@@ -259,6 +304,15 @@ export class Matrix4 extends Float32Array {
         return lookAtMatrix;
     }
 
+    /**
+     * @brief Creates a perspective projection matrix
+     * 
+     * @param fieldOfView Field of view in radians
+     * @param aspectRatio Aspect ratio of the viewport
+     * @param near Near clipping plane distance
+     * @param far Far clipping plane distance
+     * @returns A perspective projection matrix
+     */
     static perspectiveProjection(fieldOfView: number, aspectRatio: number, near: number, far: number) {
 
         const yClip = 1.0 / Math.tan(fieldOfView / 2.0);
@@ -294,53 +348,64 @@ export class Matrix4 extends Float32Array {
         2   6   10  14
         3   7   11  15
     */
+    /**
+     * @brief Creates a new matrix initialized with zeros
+     */
     constructor() {
         super(16);
     }
 
-    set rowOne(row: Vector4) { 
+    /** @brief Sets the first row */
+    set rowOne(row: Vector4) {
         this[Matrix4.ROW_ONE_INDICES[0]] = row.x;
         this[Matrix4.ROW_ONE_INDICES[1]] = row.y;
         this[Matrix4.ROW_ONE_INDICES[2]] = row.z;
         this[Matrix4.ROW_ONE_INDICES[3]] = row.w;
     }
-    set rowTwo(row: Vector4) { 
+    /** @brief Sets the second row */
+    set rowTwo(row: Vector4) {
         this[Matrix4.ROW_TWO_INDICES[0]] = row.x;
         this[Matrix4.ROW_TWO_INDICES[1]] = row.y;
         this[Matrix4.ROW_TWO_INDICES[2]] = row.z;
         this[Matrix4.ROW_TWO_INDICES[3]] = row.w;
     }
-    set rowThree(row: Vector4) { 
+    /** @brief Sets the third row */
+    set rowThree(row: Vector4) {
         this[Matrix4.ROW_THREE_INDICES[0]] = row.x;
         this[Matrix4.ROW_THREE_INDICES[1]] = row.y;
         this[Matrix4.ROW_THREE_INDICES[2]] = row.z;
         this[Matrix4.ROW_THREE_INDICES[3]] = row.w;
     }
-    set rowFour(row: Vector4) { 
+    /** @brief Sets the fourth row */
+    set rowFour(row: Vector4) {
         this[Matrix4.ROW_FOUR_INDICES[0]] = row.x;
         this[Matrix4.ROW_FOUR_INDICES[1]] = row.y;
         this[Matrix4.ROW_FOUR_INDICES[2]] = row.z;
         this[Matrix4.ROW_FOUR_INDICES[3]] = row.w;
     }
-    set columnOne(column: Vector4) { 
+    /** @brief Sets the first column */
+    set columnOne(column: Vector4) {
         this[Matrix4.COLUMN_ONE_INDICES[0]] = column.x;
         this[Matrix4.COLUMN_ONE_INDICES[1]] = column.y;
         this[Matrix4.COLUMN_ONE_INDICES[2]] = column.z;
         this[Matrix4.COLUMN_ONE_INDICES[3]] = column.w;
     }
-    set columnTwo(column: Vector4) { 
+    /** @brief Sets the second column */
+    set columnTwo(column: Vector4) {
         this[Matrix4.COLUMN_TWO_INDICES[0]] = column.x;
         this[Matrix4.COLUMN_TWO_INDICES[1]] = column.y;
         this[Matrix4.COLUMN_TWO_INDICES[2]] = column.z;
         this[Matrix4.COLUMN_TWO_INDICES[3]] = column.w;
     }
-    set columnThree(column: Vector4) { 
+    /** @brief Sets the third column */
+    set columnThree(column: Vector4) {
         this[Matrix4.COLUMN_THREE_INDICES[0]] = column.x;
         this[Matrix4.COLUMN_THREE_INDICES[1]] = column.y;
         this[Matrix4.COLUMN_THREE_INDICES[2]] = column.z;
         this[Matrix4.COLUMN_THREE_INDICES[3]] = column.w;
     }
-    set columnFour(column: Vector4) { 
+    /** @brief Sets the fourth column */
+    set columnFour(column: Vector4) {
         this[Matrix4.COLUMN_FOUR_INDICES[0]] = column.x;
         this[Matrix4.COLUMN_FOUR_INDICES[1]] = column.y;
         this[Matrix4.COLUMN_FOUR_INDICES[2]] = column.z;
@@ -417,7 +482,7 @@ export class Matrix4 extends Float32Array {
 
     /**
      * @brief Transforms this to an identity matrix in-place,
-     *        then returns itself to allow chaining calls.
+     *        then returns itself to allow chaining calls
      * 
      * @returns this for chaining
      */
@@ -431,7 +496,7 @@ export class Matrix4 extends Float32Array {
     }
 
     /**
-     * @brief Makes a new matrix that is the product of this and another matrix.
+     * @brief Makes a new matrix that is the product of this and another matrix
      * 
      * @param other Matrix to multiply this with
      * 
@@ -451,6 +516,12 @@ export class Matrix4 extends Float32Array {
         return newMatrix;
     }
 
+    /**
+     * @brief Multiplies this matrix by a vector
+     * 
+     * @param vector Vector to multiply
+     * @returns The resulting vector
+     */
     multiplyVector(vector: Vector4) {
         const rows = this.rows();
         return new Vector4(
@@ -461,10 +532,20 @@ export class Matrix4 extends Float32Array {
         );
     }
 
+    /**
+     * @brief Converts this matrix to a Matrix3 (top-left 3x3)
+     * 
+     * @returns The Matrix3 representation
+     */
     toMatrix3() {
         return this.submatrix(3, 3);
     }
 
+    /**
+     * @brief Calculates the determinant of this matrix
+     * 
+     * @returns The determinant
+     */
     determinant() {
 
         let determinant = 0;
@@ -474,6 +555,13 @@ export class Matrix4 extends Float32Array {
         return determinant;
     }
 
+    /**
+     * @brief Creates a submatrix by removing a row and a column
+     * 
+     * @param row Row to remove
+     * @param column Column to remove
+     * @returns The submatrix
+     */
     submatrix(row: number, column: number) {
 
         const submatrix = new Matrix3();
@@ -489,6 +577,13 @@ export class Matrix4 extends Float32Array {
         return submatrix;
     }
 
+    /**
+     * @brief Calculates the minor of a matrix element
+     * 
+     * @param row Row index
+     * @param column Column index
+     * @returns The minor
+     */
     minor(row: number, column: number) {
         return this.submatrix(row, column).determinant();
     }
@@ -498,13 +593,23 @@ export class Matrix4 extends Float32Array {
         return sign * this.minor(row, column);
     }
 
+    /**
+     * @brief Checks if the matrix represents an affine transformation
+     * 
+     * @returns True if affine, false otherwise
+     */
     isAffine() {
         return Math.abs(this[Matrix4.ROW_FOUR_INDICES[0]]) <= Number.EPSILON &&
-                Math.abs(this[Matrix4.ROW_FOUR_INDICES[1]]) <= Number.EPSILON &&
-                Math.abs(this[Matrix4.ROW_FOUR_INDICES[2]]) <= Number.EPSILON &&
-                Math.abs(this[Matrix4.ROW_FOUR_INDICES[3]] - 1) <= Number.EPSILON;
+            Math.abs(this[Matrix4.ROW_FOUR_INDICES[1]]) <= Number.EPSILON &&
+            Math.abs(this[Matrix4.ROW_FOUR_INDICES[2]]) <= Number.EPSILON &&
+            Math.abs(this[Matrix4.ROW_FOUR_INDICES[3]] - 1) <= Number.EPSILON;
     }
 
+    /**
+     * @brief Calculates the inverse of this matrix
+     * 
+     * @returns The inverse matrix
+     */
     inverse() {
         return this.isAffine() ? this._inverseAffine() : this._inverseAdjoint();
     }
@@ -532,7 +637,7 @@ export class Matrix4 extends Float32Array {
             this[Matrix4.COLUMN_FOUR_INDICES[2]],
         );
         const invertedTranslation = subInverse.multiplyVector(translation).negated(true);
-        
+
         const inverse = new Matrix4().toIdentity();
         for (let row = 0; row < 3; ++row) {
             for (let column = 0; column < 3; ++column) {
@@ -544,6 +649,11 @@ export class Matrix4 extends Float32Array {
         return inverse;
     }
 
+    /**
+     * @brief Transposes this matrix
+     * 
+     * @returns The transposed matrix
+     */
     transpose() {
         const transposed = new Matrix4();
         for (let row = 0; row < 4; ++row) {

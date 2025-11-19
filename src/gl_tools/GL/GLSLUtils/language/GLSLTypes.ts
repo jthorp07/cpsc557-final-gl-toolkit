@@ -5,6 +5,9 @@
  *        requires WebGL2
  */
 
+/**
+ * @brief Union type of all valid GLSL types supported by this library
+ */
 export type GLSLType = "void" | "bool" | "int" | "float" |
     // Vectors
     "vec2" | "vec3" | "vec4" |
@@ -31,6 +34,12 @@ const WEBGL_1_TYPES = new Set<GLSLType>([
     "sampler2D", "samplerCube"
 ]);
 
+/**
+ * @brief Checks if a GLSL type requires WebGL 2.0
+ * 
+ * @param type The GLSL type to check
+ * @returns True if the type requires WebGL 2.0, false otherwise
+ */
 export function requiresWebGL2(type: GLSLType) {
     return !(WEBGL_1_TYPES.has(type));
 }

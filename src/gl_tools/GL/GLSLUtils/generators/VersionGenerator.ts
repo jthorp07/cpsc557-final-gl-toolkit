@@ -6,8 +6,20 @@
 
 import { GLVersion } from "../../types.js";
 
+/**
+ * @class VersionGenerator
+ * 
+ * @brief Generator for version declarations
+ */
 export class VersionGenerator {
 
+
+    /**
+     * @brief Generates a version declaration string
+     * 
+     * @param glVersion The GLSL version
+     * @returns The version declaration string
+     */
     static generateVersionDeclaration(glVersion: GLVersion) {
         switch (glVersion) {
             case 1:
@@ -16,4 +28,5 @@ export class VersionGenerator {
                 return "#version 300";
         }
     }
+
 }
