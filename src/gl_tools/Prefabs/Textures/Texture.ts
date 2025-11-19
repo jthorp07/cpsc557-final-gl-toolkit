@@ -3,7 +3,7 @@
  */
 
 import { GLContext } from "../../GL/GLContext.js";
-import { ShaderProgram } from "../../GL/ShaderProgram.js";
+import { ShaderProgram } from "../../GL/Shaders/ShaderProgram.js";
 
 /**
  * @class BaseTexture

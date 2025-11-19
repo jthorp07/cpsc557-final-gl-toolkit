@@ -5,7 +5,7 @@
  */
 
 import { assertNotUndefined } from "../../../Core/Assert.js";
-import { Shader, VertexShader } from "../../Shader.js";
+import { Shader, VertexShader } from "../../Shaders/Shader.js";
 import { GLVersion, ShaderAttribute, ShaderVarying } from "../../types.js";
 import { AttributeGenerator, VaryingGenerator } from "../generators/index.js";
 import { BaseExpression, VariableExpression } from "../language/GLSLGrammar.js";

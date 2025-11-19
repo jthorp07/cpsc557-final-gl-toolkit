@@ -7,7 +7,7 @@
 import { assertNotNull, ShaderProgram, flattenVectors, BaseShape, RenderObject } from "../index.js";
 import { makeGenericFragmentShader } from "./GLSLUtils/templates/GenericFragmentShader.js";
 import { makeGenericVertexShader } from "./GLSLUtils/templates/GenericVertexShader.js";
-import { FragmentShader, VertexShader } from "./Shader.js";
+import { FragmentShader, VertexShader } from "./Shaders/Shader.js";
 import { GLVersion, PackedGLBuffer, PackedGLShape } from "./types.js";
 
 type GLContextOptions = {

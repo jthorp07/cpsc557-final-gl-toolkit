@@ -11,7 +11,7 @@ import { Matrix3, Matrix4 } from "../MatrixMath/Matrix.js";
 import { Vector2, Vector3, Vector4 } from "../MatrixMath/Vector.js";
 import { BaseShape } from "../Prefabs/index.js";
 import { GLSLType } from "./GLSLUtils/language/GLSLTypes.js";
-import { FragmentShader, VertexShader } from "./Shader.js";
+import { FragmentShader, VertexShader } from "./Shaders/Shader.js";
 
 type AttributePointerData = {
     size: number;

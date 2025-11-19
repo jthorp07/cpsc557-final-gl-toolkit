@@ -5,7 +5,7 @@
  *        and in/out parameter data for frontend interaction
  */
 
-import { ShaderAttribute, ShaderUniform, ShaderVarying } from "./types";
+import { ShaderAttribute, ShaderUniform, ShaderVarying } from "../types";
 
 /**
  * @class Shader

@@ -6,7 +6,7 @@
  */
 
 import { GLContext } from "../GL/GLContext.js";
-import { ShaderProgram } from "../GL/ShaderProgram.js";
+import { ShaderProgram } from "../GL/Shaders/ShaderProgram.js";
 import { GLVersion } from "../GL/types.js";
 import { Vector3 } from "../MatrixMath/Vector.js";
 import { BaseShape } from "../Prefabs/index.js";

@@ -4,7 +4,7 @@
  * @brief Abstract base shader builder class
  */
 
-import { Shader } from "../../Shader.js";
+import { Shader } from "../../Shaders/Shader.js";
 import { GLVersion, PrecisionDeclaration, ShaderUniform } from "../../types.js";
 import { PrecisionLevel } from "../language/GLSLTypes.js";
 import { PrecisionGenerator, StatementGenerator, UniformGenerator, VersionGenerator } from "../generators/index.js";

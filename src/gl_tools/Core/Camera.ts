@@ -4,7 +4,7 @@
  * @brief Optional camera utilities that can be injected into a Scene.
  */
 
-import { ShaderProgram } from "../GL/ShaderProgram.js";
+import { ShaderProgram } from "../GL/Shaders/ShaderProgram.js";
 import { Matrix4 } from "../MatrixMath/Matrix.js";
 import { Transform } from "../MatrixMath/Transform.js";
 import { Vector3 } from "../MatrixMath/Vector.js";
