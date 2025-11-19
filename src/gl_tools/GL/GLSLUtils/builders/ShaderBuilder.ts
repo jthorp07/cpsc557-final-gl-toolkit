@@ -5,7 +5,8 @@
  */
 
 import { Shader } from "../../Shader.js";
-import { GLVersion, PrecisionDeclaration, PrecisionLevel, ShaderUniform } from "../../types.js";
+import { GLVersion, PrecisionDeclaration, ShaderUniform } from "../../types.js";
+import { PrecisionLevel } from "../language/GLSLTypes.js";
 import { PrecisionGenerator, StatementGenerator, UniformGenerator, VersionGenerator } from "../generators/index.js";
 import { AssignmentStatement, BaseExpression, BooleanExpression, DeclarationStatement, IfStatement, Statement, VariableExpression } from "../language/GLSLGrammar.js";
 import { GLSLType } from "../language/GLSLTypes.js";

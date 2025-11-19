@@ -4,7 +4,7 @@
  * @brief Internal types that either map to WebGL types or group coupled WebGL data
  */
 
-import { GLSLType } from "./GLSLUtils/language/GLSLTypes.js";
+import { GLSLType, PrecisionLevel } from "./GLSLUtils/language/GLSLTypes.js";
 
 /**
  * @brief Valid WebGL versions
@@ -32,11 +32,6 @@ export type PackedGLBuffer = {
     buffer: WebGLBuffer,
     destroy: () => void;
 };
-
-/**
- * @brief Precision declaration keywords
- */
-export type PrecisionLevel = "lowp" | "mediump" | "highp";
 
 /**
  * @brief Precision declaration for a shader variable

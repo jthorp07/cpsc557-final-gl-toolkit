@@ -43,3 +43,7 @@ const WEBGL_1_TYPES = new Set<GLSLType>([
 export function requiresWebGL2(type: GLSLType) {
     return !(WEBGL_1_TYPES.has(type));
 }
+/**
+ * @brief Precision declaration keywords
+ */
+export type PrecisionLevel = "lowp" | "mediump" | "highp";
