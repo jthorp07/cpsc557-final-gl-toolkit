@@ -6,7 +6,7 @@
 
 import { BaseTexture } from "./Texture.js";
 import { GLColor } from "./Color.js";
-import { ShaderProgram } from "../../GL/ShaderProgram.js";
+import { ShaderProgram } from "../../GL/Shaders/ShaderProgram.js";
 import { GLContext } from "../../GL/GLContext.js";
 
 /**
