@@ -1,17 +1,30 @@
-import { Scene, Cube, GLColor, Vector3 } from "./gl_tools/index.js";
+/**
+ * @file RotatingCubeScene.ts
+ *
+ * @brief A scene demonstrating a rotating cube with user controls.
+ */
+import { Scene, Cube, GLColor, Vector3, Transform } from "./gl_tools/index.js";
 // Control Variables
 const RotationAxes = {
     X: 1,
     Y: 2,
     Z: 4
 };
+/**
+ * @class RotatingCubeScene
+ *
+ * @brief A concrete scene implementation showing a rotating colored cube.
+ */
 export class RotatingCubeScene extends Scene {
     constructor() {
         super(...arguments);
         // Scene Runtime Data
         this.currentRotation = RotationAxes.Y;
-        this.degreesPerSecond = 360 / 3;
+        this.radiansPerSecond = Transform.degreesToRadians(360 / 3);
     }
+    /**
+     * @brief Toggles rotation around the X axis.
+     */
     toggleXRotation() {
         if (this.currentRotation & RotationAxes.X) {
             this.currentRotation -= RotationAxes.X;
@@ -20,6 +33,9 @@ export class RotatingCubeScene extends Scene {
             this.currentRotation += RotationAxes.X;
         }
     }
+    /**
+     * @brief Toggles rotation around the Y axis.
+     */
     toggleYRotation() {
         if (this.currentRotation & RotationAxes.Y) {
             this.currentRotation -= RotationAxes.Y;
@@ -28,6 +44,9 @@ export class RotatingCubeScene extends Scene {
             this.currentRotation += RotationAxes.Y;
         }
     }
+    /**
+     * @brief Toggles rotation around the Z axis.
+     */
     toggleZRotation() {
         if (this.currentRotation & RotationAxes.Z) {
             this.currentRotation -= RotationAxes.Z;
@@ -36,6 +55,9 @@ export class RotatingCubeScene extends Scene {
             this.currentRotation += RotationAxes.Z;
         }
     }
+    /**
+     * @brief Initializes the scene, camera, and shapes.
+     */
     init() {
         this.withCamera((camera) => {
             camera.move(new Vector3(0, 0, 3));
@@ -55,22 +77,35 @@ export class RotatingCubeScene extends Scene {
         });
         this.instantiateObject("cube", "cube");
     }
+    /**
+     * @brief Updates the scene state.
+     *
+     * @param delta Time elapsed since last frame in seconds.
+     */
     update(delta) {
         this.withObject("cube", (cube) => {
             cube.setRotation((rotation) => {
                 if ((this.currentRotation & RotationAxes.X) !== 0)
-                    rotation.x += (this.degreesPerSecond * delta);
+                    rotation.x += (this.radiansPerSecond * delta);
                 if ((this.currentRotation & RotationAxes.Y) !== 0)
-                    rotation.y += (this.degreesPerSecond * delta);
+                    rotation.y += (this.radiansPerSecond * delta);
                 if ((this.currentRotation & RotationAxes.Z) !== 0)
-                    rotation.z += (this.degreesPerSecond * delta);
+                    rotation.z += (this.radiansPerSecond * delta);
                 return rotation;
             });
         });
     }
+    /**
+     * @brief Cleans up scene resources.
+     */
     cleanup() {
         throw new Error("Method not implemented.");
     }
+    /**
+     * @brief Specifies the required WebGL version.
+     *
+     * @returns The required WebGL version (1 or 2).
+     */
     requiredWebGLVersion() {
         return 1;
     }
