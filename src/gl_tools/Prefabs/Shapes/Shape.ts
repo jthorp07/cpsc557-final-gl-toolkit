@@ -2,7 +2,7 @@
  * @file Shape.ts
  * 
  * @brief An abstract class providing an interface and data members for topology
- *        and, static transformation, and instantiation to renderable objects.
+ *        and, static transformation, and instantiation to renderable objects
  */
 
 import { GLContext } from "../../GL/GLContext.js";
@@ -21,21 +21,25 @@ export class BaseShape {
     private _normals: Vector3[];
     private _relativeIndices: number[];
     private _textureCoordinates: Vector2[];
+    private _indexCount: number;
     private _vertexCount: number;
     private _texture: BaseTexture = new SolidColorTexture(GLColor.Red);
     private _topology: PackedGLShape | undefined
 
     constructor(vertices: Vector3[], normals: Vector3[], relativeIndices: number[], textureCoordinates: Vector2[]) {
         this._vertices = vertices;
-        this._vertexCount = vertices.length;
+        this._indexCount = relativeIndices.length;
         this._normals = normals;
         this._relativeIndices = relativeIndices;
         this._textureCoordinates = textureCoordinates;
+        this._vertexCount = vertices.length;
     }
 
     packedTexture() {
         return this._texture.packedData();
     }
+
+    get texture() { return this._texture; };
 
     pack(context: GLContext) {
         if (this._topology) {
@@ -65,6 +69,10 @@ export class BaseShape {
 
     textureCoordinates() {
         return this._textureCoordinates;
+    }
+
+    indexCount() {
+        return this._indexCount;
     }
 
     vertexCount() {
@@ -98,7 +106,7 @@ export class BaseShape {
 
         // Transform
         let newVertices: Vector3[] = [];
-        for (let i = 0; i < this._vertexCount; ++i) {
+        for (let i = 0; i < this._indexCount; ++i) {
             const originalPoint = new Vector4(
                 this._vertices[i].x,
                 this._vertices[i].y,
