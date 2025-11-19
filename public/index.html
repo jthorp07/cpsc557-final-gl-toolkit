@@ -1,0 +1,51 @@
+<!--
+    A page that uses WebGL to render an animated 3D cube
+-->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>GL-Toolkit Demo</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <script type="module" src="scripts/A3.js"></script>
+    <script type="module" src="scripts/Page.js"></script>
+</head>
+<body class="dark">
+    <div class="app-container">
+        <header class="app-header">
+            <h1>GL-Toolkit Demo</h1>
+            <div class="theme-switch-wrapper">
+                <label class="theme-switch" for="themeToggle">
+                    <input type="checkbox" id="themeToggle" />
+                    <div class="slider round"></div>
+                </label>
+                <span>Dark Mode</span>
+            </div>
+        </header>
+
+        <main class="canvas-container">
+            <canvas id="glTarget" width="1024" height="512">
+                If the animation does not load, your browser may not support WebGL.
+            </canvas>
+        </main>
+
+        <section class="controls-container">
+            <div class="control-group">
+                <h3>Toggle Rotation Axes</h3>
+                <div class="button-group">
+                    <button id="rotateXButton">X-Axis</button>
+                    <button id="rotateYButton">Y-Axis</button>
+                    <button id="rotateZButton">Z-Axis</button>
+                </div>
+            </div>
+            <div class="control-group">
+                <h3>Download Shaders</h3>
+                <div class="button-group">
+                    <button id="downloadVertexShader">Vertex Shader</button>
+                    <button id="downloadFragmentShader">Fragment Shader</button>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
