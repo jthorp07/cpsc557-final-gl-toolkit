@@ -24,17 +24,20 @@ export class GLCamera {
     ;
     get projectionMatrix() { return this._projectionMatrix; }
     ;
+    get position() { return this._position; }
+    ;
     move(movementVector) {
         this._position.add(movementVector, true);
-        this.calculateView();
+        this._viewMatrix = this.calculateView();
     }
     lookAt(target, up = Vector3.NormalY) {
         this._target = target;
         this._up = up;
-        this.calculateView();
+        this._viewMatrix = this.calculateView();
     }
     setFieldOfView(degrees) {
         this._fov = Transform.degreesToRadians(degrees);
+        this._projectionMatrix = this.calculateProjection();
     }
     apply(program) {
         program.setUniformMat4("viewMatrix", this._viewMatrix);
