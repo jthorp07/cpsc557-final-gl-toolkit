@@ -4,7 +4,7 @@
  * @brief Sets up page style controls
  */
 
-import { assertNarrowableTo } from "./gl_tools";
+import { assertNarrowableTo } from "./gl_tools/index.js";
 
 const THEME_TOGGLE_INPUT = "themeToggle" as const;
 const ROTATE_X_ID = "rotateXButton" as const;
