@@ -6,8 +6,7 @@
 
 export { GLContext } from "./GLContext.js";
 export { ShaderProgram } from "./ShaderProgram.js";
-
-export { 
+export {
     GLVersion, PackedGLShape, PackedGLBuffer,
     ShaderUniform, ShaderVarying
 } from "./types.js";
