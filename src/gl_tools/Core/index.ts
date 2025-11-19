@@ -10,3 +10,5 @@ export { GLApp } from "./GLApp.js";
 export { ResourceLoader } from "./ResourceLoader.js";
 export { assertNotNull, assertNotUndefined, assertNarrowableTo, assert } from "./Assert.js";
 export { RenderObject } from "./RenderObject.js";
+export { GLCamera } from "./Camera.js";
+export { GLLight } from "./Light.js";

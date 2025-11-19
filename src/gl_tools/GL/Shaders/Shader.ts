@@ -5,7 +5,7 @@
  *        and in/out parameter data for frontend interaction
  */
 
-import { ShaderAttribute, ShaderUniform, ShaderVarying } from "../types";
+import { ShaderAttribute, ShaderUniform, ShaderVarying } from "../types.js";
 
 /**
  * @class Shader
@@ -47,7 +47,7 @@ export abstract class Shader {
 
 /**
  * @class VertexShader
- * 
+ *
  * @brief A vertex shader
  */
 export class VertexShader extends Shader {
@@ -58,7 +58,7 @@ export class VertexShader extends Shader {
 
     /**
      * @brief Creates a new VertexShader
-     * 
+     *
      * @param text The shader source code
      * @param uniforms Array of uniforms used in the shader
      * @param attributes Array of attributes used in the shader

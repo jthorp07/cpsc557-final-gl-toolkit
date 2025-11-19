@@ -4,7 +4,6 @@
  * @brief Builder class for GLSL fragment shaders
  */
 
-import { assertNotUndefined } from "../../../Core/Assert.js";
 import { FragmentShader, Shader } from "../../Shaders/Shader.js";
 import { GLVersion, ShaderVarying } from "../../types.js";
 import { VaryingGenerator } from "../generators/VaryingGenerator.js";

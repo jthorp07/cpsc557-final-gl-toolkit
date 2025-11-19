@@ -6,5 +6,5 @@
  *        vertices and shader attribute data.
  */
 
-export { BaseShape, Cube, Sphere } from "./Shapes/index.js";
-export { GLColor, BaseTexture } from "./Textures/index.js";
+export { BaseShape, Cube, Sphere, Plane, RectangularPyramid } from "./Shapes/index.js";
+export { GLColor, BaseTexture, SolidColorTexture, PerVertexColorTexture } from "./Textures/index.js";

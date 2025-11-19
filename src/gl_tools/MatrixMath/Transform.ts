@@ -4,7 +4,8 @@
  * @brief Factory functions to create matrices for geometric transformations
  */
 
-import { Matrix4, Vector3, Vector4 } from "./index.js";
+import { Matrix4 } from "./Matrix.js";
+import { Vector3 } from "./Vector.js";
 
 /**
  * @brief A class to act as a namespace for the functions implemented in this file

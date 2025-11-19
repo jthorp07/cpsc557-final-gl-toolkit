@@ -5,5 +5,5 @@
  */
 
 export { Vector2, Vector3, Vector4, flattenVectors } from "./Vector.js";
-export { Matrix4 } from "./Matrix.js";
+export { Matrix3, Matrix4 } from "./Matrix.js";
 export { Transform } from "./Transform.js";

@@ -4,8 +4,11 @@
  * @brief GLSL language model for frontend representation
  */
 
-export { GLSLType, requiresWebGL2 } from "./GLSLTypes.js";
+export { GLSLType, requiresWebGL2, PrecisionLevel } from "./GLSLTypes.js";
 export {
     BaseExpression, ArithmeticExpression, LiteralExpression, VariableExpression, InvokationExpression,
-    Statement, DeclarationStatement, AssignmentStatement
+    BooleanExpression,
+    Statement, DeclarationStatement, AssignmentStatement, IfStatement
 } from "./GLSLGrammar.js";
+export { PrimitiveLiteral } from "./PrimitiveLiteral.js";
+export { VectorLiteral } from "./VectorLiteral.js";

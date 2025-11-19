@@ -4,7 +4,6 @@
  * @brief Builder class for GLSL vertex shaders
  */
 
-import { assertNotUndefined } from "../../../Core/Assert.js";
 import { Shader, VertexShader } from "../../Shaders/Shader.js";
 import { GLVersion, ShaderAttribute, ShaderVarying } from "../../types.js";
 import { AttributeGenerator, VaryingGenerator } from "../generators/index.js";
