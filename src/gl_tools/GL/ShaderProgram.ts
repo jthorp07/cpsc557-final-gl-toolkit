@@ -5,7 +5,7 @@
  *        and with basic error handling.
  */
 
-import { assertNotUndefined, assertNotNull } from "../Core/Assert.js";
+import { assertNotNull } from "../Core/Assert.js";
 import { RenderObject } from "../Core/RenderObject.js";
 import { Matrix3, Matrix4 } from "../MatrixMath/Matrix.js";
 import { Vector2, Vector3, Vector4 } from "../MatrixMath/Vector.js";
@@ -64,10 +64,10 @@ const ATTRIBUTE_POINTER_MAPPINGS = new Map<GLSLType, AttributePointerGetter>([
 export class ShaderProgram {
 
     // WebGL Data
-    private readonly context: WebGLRenderingContext | WebGL2RenderingContext;
-    private readonly program: WebGLProgram;
-    private uniforms = new Map<string, [WebGLUniformLocation, GLSLType]>();
-    private vertexAttributes = new Map<string, [number, GLSLType]>();
+    protected readonly context: WebGLRenderingContext | WebGL2RenderingContext;
+    protected readonly program: WebGLProgram;
+    protected uniformMap = new Map<string, [WebGLUniformLocation, GLSLType]>();
+    protected vertexAttributes = new Map<string, [number, GLSLType]>();
 
     private _vertexShaderUrl: string;
     private _fragmentShaderUrl: string;
@@ -81,7 +81,7 @@ export class ShaderProgram {
         // Create and link shader program
         this.context = context;
         this.program = this.linkProgram(
-            this.compileShader(context.VERTEX_SHADER, vertexShader.text), 
+            this.compileShader(context.VERTEX_SHADER, vertexShader.text),
             this.compileShader(context.FRAGMENT_SHADER, fragmentShader.text)
         );
         this.use();
@@ -99,10 +99,15 @@ export class ShaderProgram {
         allUniforms.map((uniform) => {
             const uniformLocation = this.context.getUniformLocation(this.program, uniform.name);
             assertNotNull(uniformLocation);
-            this.uniforms.set(uniform.name, [uniformLocation, uniform.type]);
+            this.uniformMap.set(uniform.name, [uniformLocation, uniform.type]);
         })
 
     }
+
+    /** @brief Returns the URL of the vertex shader source */
+    get vertexShaderUrl() { return this._vertexShaderUrl; };
+    /** @brief Returns the URL of the fragment shader source */
+    get fragmentShaderUrl() { return this._fragmentShaderUrl; };
 
     /**
      * @brief Adds the underlying program to the underlying context's current rendering
@@ -150,62 +155,117 @@ export class ShaderProgram {
         this.context.enableVertexAttribArray(location);
     }
 
+    /**
+     * @brief Sets a boolean uniform
+     * 
+     * @param name Name of the uniform
+     * @param data Value to set
+     */
     setUniformBool(name: string, data: boolean) {
 
         const uniformLocation = this.getUniform(name, "bool");
         this.context.uniform1i(uniformLocation, data ? 1 : 0);
     }
 
+    /**
+     * @brief Sets a float uniform
+     * 
+     * @param name Name of the uniform
+     * @param data Value to set
+     */
     setUniformFloat(name: string, data: number) {
 
         const uniformLocation = this.getUniform(name, "float");
         this.context.uniform1f(uniformLocation, data);
     }
 
+    /**
+     * @brief Sets a vec2 uniform
+     * 
+     * @param name Name of the uniform
+     * @param data Value to set
+     */
     setUniformVec2(name: string, data: Vector2) {
 
         const uniformLocation = this.getUniform(name, "vec2");
         this.context.uniform2fv(uniformLocation, data);
     }
 
+    /**
+     * @brief Sets a vec3 uniform
+     * 
+     * @param name Name of the uniform
+     * @param data Value to set
+     */
     setUniformVec3(name: string, data: Vector3) {
 
         const uniformLocation = this.getUniform(name, "vec3");
         this.context.uniform3fv(uniformLocation, data);
     }
 
+    /**
+     * @brief Sets a vec4 uniform
+     * 
+     * @param name Name of the uniform
+     * @param data Value to set
+     */
     setUniformVec4(name: string, data: Vector4) {
 
         const uniformLocation = this.getUniform(name, "vec4");
         this.context.uniform4fv(uniformLocation, data);
     }
 
+    /**
+     * @brief Sets a mat2 uniform
+     * 
+     * @param name Name of the uniform
+     * @param data Value to set
+     */
     setUniformMat2(name: string, data: Vector2[]) {
         throw new Error("Not implemented");
     }
 
+    /**
+     * @brief Sets a mat3 uniform
+     * 
+     * @param name Name of the uniform
+     * @param data Value to set
+     */
     setUniformMat3(name: string, data: Matrix3) {
 
         const uniformLocation = this.getUniform(name, "mat3");
         this.context.uniformMatrix3fv(uniformLocation, false, data);
     }
 
+    /**
+     * @brief Sets a mat4 uniform
+     * 
+     * @param name Name of the uniform
+     * @param data Value to set
+     */
     setUniformMat4(name: string, data: Matrix4) {
 
         const uniformLocation = this.getUniform(name, "mat4");
         this.context.uniformMatrix4fv(uniformLocation, false, data);
     }
 
-    private getUniform(name: string, type: GLSLType) {
-        if (!this.uniforms.has(name)) throw new Error(`${name} is not a uniform for this shader program`);
-        const [loc, glType] = this.uniforms.get(name);
+    /**
+     * @brief Gets the location of a uniform
+     * 
+     * @param name Name of the uniform
+     * @param type Expected type of the uniform
+     * @returns The WebGLUniformLocation
+     */
+    protected getUniform(name: string, type: GLSLType) {
+        if (!this.uniformMap.has(name)) throw new Error(`${name} is not a uniform for this shader program`);
+        const [loc, glType] = this.uniformMap.get(name);
         if (glType !== type) throw new Error(`${name} is not of type ${type}`);
 
         return loc;
     }
 
     /**
-     * @brief Compiles text to a WebGLShader. Throws on error.
+     * @brief Compiles text to a WebGLShader. Throws on error
      * 
      * @param type Type of shader to create
      * @param shaderText Literal text of the shader to compile
@@ -226,7 +286,7 @@ export class ShaderProgram {
 
     /**
      * @brief Makes a WebGLProgram and links the given shaders to it. Throws
-     *        on error.
+     *        on error
      * 
      * @param vertexShader Compiled vertex shader to link
      * @param fragmentShader Compiled fragment shader to link
