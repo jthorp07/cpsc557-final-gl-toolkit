@@ -1,3 +1,8 @@
+/**
+ * @file A3.ts
+ *
+ * @brief Main entry point for Assignment 3.
+ */
 import { GLApp } from "./gl_tools/index.js";
 import { RotatingCubeScene } from "./RotatingCubeScene.js";
 // Relevant Elements
@@ -8,8 +13,15 @@ const ROTATE_Z_ID = "rotateZButton";
 const DOWNLOAD_VERTEX_SHADER = "downloadVertexShader";
 const DOWNLOAD_FRAGMENT_SHADER = "downloadFragmentShader";
 window.onload = async () => {
-    // Initialize Scene and Attach Controls
+    // Initialize Scene and App
     const scene = new RotatingCubeScene();
+    const canvas = document.getElementById(CANVAS_ELEMENT_ID);
+    if (!(canvas instanceof HTMLCanvasElement)) {
+        alert(`Error: Element ${CANVAS_ELEMENT_ID} is not a canvas`);
+        return;
+    }
+    const app = new GLApp(scene);
+    // Initialize Constrols
     const rotateX = document.getElementById(ROTATE_X_ID);
     if (!(rotateX instanceof HTMLButtonElement)) {
         alert(`Error: Element ${ROTATE_X_ID} is not a button`);
@@ -28,12 +40,37 @@ window.onload = async () => {
         return;
     }
     rotateZ.onclick = scene.toggleZRotation.bind(scene);
-    // Initialize GL App
-    const canvas = document.getElementById(CANVAS_ELEMENT_ID);
-    if (!(canvas instanceof HTMLCanvasElement)) {
-        alert(`Error: Element ${CANVAS_ELEMENT_ID} is not a canvas`);
+    const downloadVertexShader = document.getElementById(DOWNLOAD_VERTEX_SHADER);
+    if (!(downloadVertexShader instanceof HTMLButtonElement)) {
+        alert(`Error: Element ${DOWNLOAD_VERTEX_SHADER} is not a button`);
         return;
     }
-    const app = new GLApp(scene);
+    downloadVertexShader.onclick = () => {
+        const vertexShader = scene.vertexShaderUrl;
+        if (!vertexShader) {
+            alert("Error: Vertex shader URL not found");
+            return;
+        }
+        const link = document.createElement("a");
+        link.href = vertexShader;
+        link.download = "vertexShader.glsl";
+        link.click();
+    };
+    const downloadFragmentShader = document.getElementById(DOWNLOAD_FRAGMENT_SHADER);
+    if (!(downloadFragmentShader instanceof HTMLButtonElement)) {
+        alert(`Error: Element ${DOWNLOAD_FRAGMENT_SHADER} is not a button`);
+        return;
+    }
+    downloadFragmentShader.onclick = () => {
+        const fragmentShader = scene.fragmentShaderUrl;
+        if (!fragmentShader) {
+            alert("Error: Fragment shader URL not found");
+            return;
+        }
+        const link = document.createElement("a");
+        link.href = fragmentShader;
+        link.download = "fragmentShader.glsl";
+        link.click();
+    };
     app.start(canvas);
 };
