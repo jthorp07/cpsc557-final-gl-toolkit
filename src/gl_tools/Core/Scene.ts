@@ -2,7 +2,7 @@
  * @file Scene.ts
  * 
  * @brief Defines the Scene class, which is a collection of WebGL programs
- *        and supporting data that is ready to be rendered in a render loop.
+ *        and supporting data that is ready to be rendered in a render loop
  */
 
 import { GLContext } from "../GL/GLContext.js";
@@ -17,7 +17,7 @@ import { RenderObject } from "./RenderObject.js";
 
 /**
  * @brief Employs a template method to enable subclasses to define objects
- *        and animations for a render loop.
+ *        and animations for a render loop
  */
 export abstract class Scene {
 
@@ -35,6 +35,8 @@ export abstract class Scene {
         const [width, height] = context.dimensions();
         this._camera = new GLCamera(width, height);
     }
+    get vertexShaderUrl() { return this._program?.vertexShaderUrl; };
+    get fragmentShaderUrl() { return this._program?.fragmentShaderUrl; };
 
     /**
      * @brief Renders a frame of this scene
@@ -44,7 +46,6 @@ export abstract class Scene {
     renderFrame(time?: number) {
         const now = time || performance.now();
         const delta = (this._lastRenderTime === 0) ? 0 : (now - this._lastRenderTime) / 1000;
-        console.log(`Scene: Delta = ${delta}`);
         this._lastRenderTime = now;
         assert(this._ready, "Scene does not appear to have called init() before rendering");
         this.update(delta);
@@ -180,11 +181,15 @@ export abstract class Scene {
      */
     abstract requiredWebGLVersion(): GLVersion | undefined;
 
+    /**
+     * @brief Renders all registered objects
+     */
     private renderObjects() {
 
         // Set camera uniforms
         this._program.setUniformMat4("viewMatrix", this._camera.viewMatrix);
         this._program.setUniformMat4("projectionMatrix", this._camera.projectionMatrix);
+        this._program.setUniformVec3("cameraPosition", this._camera.position);
 
         // Set light uniforms
         this._program.setUniformVec3("lightPosition", this._light.position);
@@ -195,12 +200,16 @@ export abstract class Scene {
             object.updateModelMatrix();
             object.updateNormalMatrix();
             this._program.bind(object.shape);
+            object.shape.texture.apply(this._program);
             this._program.setUniformMat4("modelMatrix", object.modelMatrix);
             this._program.setUniformMat3("normalMatrix", object.normalMatrix);
             this._context.drawObject(object);
         });
     }
 
+    /**
+     * @brief Packs all registered objects for rendering
+     */
     private packObjects() {
         this._objects.forEach(object => object.shape.pack(this._context));
     }
