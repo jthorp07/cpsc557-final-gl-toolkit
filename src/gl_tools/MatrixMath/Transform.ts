@@ -1,13 +1,13 @@
 /**
  * @file Transform.ts
  * 
- * @brief Factory functions to create matrices for geometric transformations.
+ * @brief Factory functions to create matrices for geometric transformations
  */
 
 import { Matrix4, Vector3, Vector4 } from "./index.js";
 
 /**
- * @brief A class to act as a namespace for the functions implemented in this file.
+ * @brief A class to act as a namespace for the functions implemented in this file
  */
 export class Transform {
 
@@ -22,7 +22,7 @@ export class Transform {
     }
 
     /**
-     * @brief Creates a matrix that can be used to rotate a point in 3D space.
+     * @brief Creates a matrix that can be used to rotate a point in 3D space
      * 
      * @param radians Angle the matrix should rotate (in radians)
      * @param axis Axis the matrix should rotate about
@@ -74,9 +74,10 @@ export class Transform {
 
 
     /**
+     * @brief Creates a translation matrix
      * 
-     * @param target 
-     * @returns 
+     * @param target Vector representing the translation
+     * @returns A translation matrix
      */
     static translate(target: Vector3) {
         const matrix = new Matrix4();
@@ -89,9 +90,10 @@ export class Transform {
     }
 
     /**
+     * @brief Creates a scaling matrix
      * 
-     * @param scalar 
-     * @returns 
+     * @param scalar Vector representing the scale factors
+     * @returns A scaling matrix
      */
     static scale(scalar: Vector3) {
         const matrix = new Matrix4();

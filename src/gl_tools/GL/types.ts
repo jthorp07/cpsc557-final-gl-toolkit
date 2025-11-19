@@ -38,21 +38,33 @@ export type PackedGLBuffer = {
  */
 export type PrecisionLevel = "lowp" | "mediump" | "highp";
 
+/**
+ * @brief Precision declaration for a shader variable
+ */
 export type PrecisionDeclaration = {
     precision: PrecisionLevel;
     target: GLSLType;
 };
 
+/**
+ * @brief A shader attribute
+ */
 export type ShaderAttribute = {
     name: string;
     type: GLSLType;
 };
 
+/**
+ * @brief A shader uniform
+ */
 export type ShaderUniform = {
     name: string;
     type: GLSLType;
 };
 
+/**
+ * @brief A shader varying
+ */
 export type ShaderVarying = {
     direction: "in" | "out";
     name: string;
