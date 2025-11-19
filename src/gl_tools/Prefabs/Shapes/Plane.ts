@@ -68,24 +68,56 @@ function planeTextureCoordinates() {
     ];
 }
 
+/**
+ * @class Plane
+ * 
+ * @brief A rectangular plane
+ */
 export class Plane extends BaseShape {
 
+    /**
+     * @brief Creates a plane facing the Z axis
+     * 
+     * @param width Width of the plane
+     * @param height Height of the plane
+     * @returns A new Plane instance
+     */
     static makeZPlane(width: number, height: number) {
         return new Plane(width, height);
     }
 
+    /**
+     * @brief Creates a plane facing the Y axis
+     * 
+     * @param width Width of the plane
+     * @param height Height of the plane
+     * @returns A new Plane instance
+     */
     static makeYPlane(width: number, height: number) {
         const plane = new Plane(width, height);
         plane.staticRotate(Y_PLANE_ROTATION);
         return plane;
     }
 
+    /**
+     * @brief Creates a plane facing the X axis
+     * 
+     * @param width Width of the plane
+     * @param height Height of the plane
+     * @returns A new Plane instance
+     */
     static makeXPlane(width: number, height: number) {
         const plane = new Plane(width, height);
         plane.staticRotate(X_PLANE_ROTATION);
         return plane;
     }
 
+    /**
+     * @brief Creates a new Plane
+     * 
+     * @param width Width of the plane
+     * @param height Height of the plane
+     */
     constructor(width: number, height: number) {
         super(
             planeVertices(width, height),

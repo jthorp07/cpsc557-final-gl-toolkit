@@ -7,8 +7,18 @@
 
 import { BaseShape } from "./Shape.js";
 
+/**
+ * @class Sphere
+ * 
+ * @brief A spherical shape
+ */
 export class Sphere extends BaseShape {
 
+    /**
+     * @brief Creates a new Sphere
+     * 
+     * @param radius Radius of the sphere
+     */
     constructor(radius: number = 1.0) {
         /**
          * @todo impl

@@ -122,8 +122,20 @@ function rectangularPyramidTextureCoordinates() {
     ]
 }
 
+/**
+ * @class RectangularPyramid
+ * 
+ * @brief A pyramid with a rectangular base
+ */
 export class RectangularPyramid extends BaseShape {
 
+    /**
+     * @brief Creates a new RectangularPyramid
+     * 
+     * @param baseWidth Width of the base
+     * @param baseDepth Depth of the base
+     * @param height Height of the pyramid
+     */
     constructor(baseWidth: number, baseDepth: number, height: number) {
         const vertices = rectangularPyramidVertices(baseWidth, baseDepth, height)
         super(
