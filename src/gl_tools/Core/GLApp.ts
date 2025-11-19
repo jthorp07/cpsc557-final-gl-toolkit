@@ -8,12 +8,22 @@ import { GLContext } from "../GL/GLContext.js";
 import { assertNotUndefined } from "./Assert.js";
 import { Scene } from "./Scene.js";
 
+/**
+ * @class GLApp
+ * 
+ * @brief Manages the WebGL render loop and scene lifecycle.
+ */
 export class GLApp {
 
     scene: Scene;
     running: boolean;
     requestAnimationFrameId: number | null = null;
 
+    /**
+     * @brief Creates a new GLApp instance.
+     * 
+     * @param scene The scene to render.
+     */
     constructor(scene: Scene) {
         this.scene = scene;
         this.running = false;
@@ -27,13 +37,11 @@ export class GLApp {
         if (this.running) return;
 
         // Initialize WebGL Context
-        console.log("GLApp: Initialize WebGL");
         const requiredVersion = this.scene.requiredWebGLVersion();
         const context = GLContext.initializeWithContext(canvas, { version: requiredVersion });
         assertNotUndefined(context);
 
         // Initialize scene and render loop
-        console.log("GLApp: Initialize Scene");
         this.scene.context = context;
         this.scene.initialize(context);
         this.running = true;
@@ -44,7 +52,6 @@ export class GLApp {
         };
 
         // Start render loop
-        console.log("GLApp: Start Render Loop")
         this.requestAnimationFrameId = requestAnimationFrame(tick);
     }
 

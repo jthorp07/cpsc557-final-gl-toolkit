@@ -6,6 +6,11 @@
 
 import { assertNarrowableTo } from "./Assert.js";
 
+/**
+ * @class ResourceLoader
+ * 
+ * @brief Utility class for loading resources
+ */
 export class ResourceLoader {
 
     /**
@@ -20,9 +25,9 @@ export class ResourceLoader {
         switch (sourceType) {
             case "ScriptElement":
                 const scriptElement = document.getElementById(source);
-                assertNarrowableTo<HTMLElement|null, HTMLScriptElement>(
+                assertNarrowableTo<HTMLElement | null, HTMLScriptElement>(
                     scriptElement,
-                    (val: HTMLElement|null): val is HTMLScriptElement => {
+                    (val: HTMLElement | null): val is HTMLScriptElement => {
                         return (val != null) && (val instanceof HTMLScriptElement);
                     },
                     `Element ID ${source} does not exist or is not a script`
@@ -36,6 +41,12 @@ export class ResourceLoader {
         }
     }
 
+    /**
+     * @brief Safely fetches text content from a URL
+     * 
+     * @param url URL to fetch from
+     * @returns The text content, or undefined if fetch fails
+     */
     static async safeFetch(url: string) {
         try {
             const response = await fetch(url);
