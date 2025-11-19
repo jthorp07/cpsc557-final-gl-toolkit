@@ -20,7 +20,7 @@ export function initializePageStyleConstrols() {
     const themeToggle = document.getElementById(THEME_TOGGLE_INPUT);
     assertNarrowableTo(
         themeToggle,
-        (element) => (element instanceof HTMLInputElement),
+        (element): element is HTMLInputElement => (element instanceof HTMLInputElement),
         "Expected element themeToggle to be an HTMLInputElement"
     );
     themeToggle.checked = document.body.classList.contains(DARK_THEME_CLASS);
