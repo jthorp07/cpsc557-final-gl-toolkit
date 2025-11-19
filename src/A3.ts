@@ -6,6 +6,7 @@
 
 import { GLApp } from "./gl_tools/index.js";
 import { RotatingCubeScene } from "./RotatingCubeScene.js";
+import { initializePageStyleConstrols } from "./PageStyle.js";
 
 // Relevant Elements
 const CANVAS_ELEMENT_ID = "glTarget" as const;
@@ -17,6 +18,8 @@ const DOWNLOAD_FRAGMENT_SHADER = "downloadFragmentShader" as const;
 
 window.onload = async () => {
 
+    initializePageStyleConstrols();
+
     // Initialize Scene and App
     const scene = new RotatingCubeScene();
     const canvas = document.getElementById(CANVAS_ELEMENT_ID);
@@ -26,7 +29,7 @@ window.onload = async () => {
     }
     const app = new GLApp(scene);
 
-    // Initialize Constrols
+    // Initialize Scene Controls
     const rotateX = document.getElementById(ROTATE_X_ID);
     if (!(rotateX instanceof HTMLButtonElement)) {
         alert(`Error: Element ${ROTATE_X_ID} is not a button`);
