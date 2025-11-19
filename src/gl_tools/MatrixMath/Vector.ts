@@ -8,10 +8,16 @@
 import { Matrix4 } from "./Matrix.js";
 
 /**
- * @brief A 2D Vector class capable of computing vector operations on itself and other vectors.
+ * @brief A 2D Vector class capable of computing vector operations on itself and other vectors
  */
 export class Vector2 extends Float32Array {
 
+    /**
+     * @brief Creates a new Vector2
+     * 
+     * @param x X component
+     * @param y Y component
+     */
     constructor(x = 0, y = 0) {
         super(2);
         this[0] = x;
@@ -72,20 +78,33 @@ export class Vector2 extends Float32Array {
         return new Vector2(this.x * scalar, this.y * scalar);
     }
 
+    /**
+     * @brief Clones this vector
+     * 
+     * @returns A new vector that is a copy of this
+     */
     clone() {
         return new Vector2(this.x, this.y);
     }
 
+    /** @brief Returns a string representation of this vector */
     override toString() {
         return `{${this.x}, ${this.y}}`;
     }
 }
 
 /**
- * @brief A 3D Vector class capable of computing vector operations on itself and other vectors.
+ * @brief A 3D Vector class capable of computing vector operations on itself and other vectors
  */
 export class Vector3 extends Float32Array {
 
+    /**
+     * @brief Creates a new Vector3
+     * 
+     * @param x X component
+     * @param y Y component
+     * @param z Z component
+     */
     constructor(x = 0, y = 0, z = 0) {
         super(3);
         this[0] = x;
@@ -101,9 +120,11 @@ export class Vector3 extends Float32Array {
     get z(): number { return this[2]; };
     set z(val: number) { this[2] = val; };
 
-    // Property constructors for normals
+    /** @brief Unit vector along X axis */
     static get NormalX(): Vector3 { return new Vector3(1, 0, 0); };
+    /** @brief Unit vector along Y axis */
     static get NormalY(): Vector3 { return new Vector3(0, 1, 0); };
+    /** @brief Unit vector along Z axis */
     static get NormalZ(): Vector3 { return new Vector3(0, 0, 1); };
 
     /**
@@ -248,16 +269,25 @@ export class Vector3 extends Float32Array {
         return new Vector3(this.x, this.y, this.z);
     }
 
+    /** @brief Returns a string representation of this vector */
     override toString() {
         return `{${this.x}, ${this.y}, ${this.z}}`;
     }
 }
 
 /**
- * @brief A 4D Vector class capable of computing vector operations on itself and other vectors.
+ * @brief A 4D Vector class capable of computing vector operations on itself and other vectors
  */
 export class Vector4 extends Float32Array {
 
+    /**
+     * @brief Creates a new Vector4
+     * 
+     * @param x X component
+     * @param y Y component
+     * @param z Z component
+     * @param w W component
+     */
     constructor(x = 0, y = 0, z = 0, w = 0) {
         super(4);
         this[0] = x;
@@ -266,13 +296,16 @@ export class Vector4 extends Float32Array {
         this[3] = w;
     }
 
-    // Property accessors and mutators
+    /** @brief X component */
     get x(): number { return this[0] };
     set x(val: number) { this[0] = val; };
+    /** @brief Y component */
     get y(): number { return this[1] };
     set y(val: number) { this[1] = val; };
+    /** @brief Z component */
     get z(): number { return this[2]; };
     set z(val: number) { this[2] = val; };
+    /** @brief W component */
     get w(): number { return this[3]; };
     set w(val: number) { this[3] = val; };
 
@@ -283,7 +316,7 @@ export class Vector4 extends Float32Array {
      */
     magnitude() {
         return Math.sqrt(
-            (this.x * this.x) + (this.y * this.y) + 
+            (this.x * this.x) + (this.y * this.y) +
             (this.z * this.z) + (this.w * this.w)
         );
     }
@@ -353,16 +386,29 @@ export class Vector4 extends Float32Array {
         return new Vector4(this.x, this.y, this.z, this.w);
     }
 
+    /**
+     * @brief Multiplies this vector with a matrix
+     * 
+     * @param matrix Matrix to multiply with
+     * @returns The resulting vector
+     */
     multiplyWithMatrix(matrix: Matrix4) {
         const [x, y, z, w] = matrix.rows();
         return new Vector4(this.dot(x), this.dot(y), this.dot(z), this.dot(w));
     }
 
+    /** @brief Returns a string representation of this vector */
     override toString() {
         return `{${this.x}, ${this.y}, ${this.z}, ${this.w}}`;
     }
 }
 
+/**
+ * @brief Flattens an array of vectors into a single Float32Array
+ * 
+ * @param vectors Array of vectors to flatten
+ * @returns A flattened Float32Array
+ */
 export function flattenVectors(vectors: Float32Array[]) {
     let flattenedLength = 0;
     for (const vector of vectors) {
