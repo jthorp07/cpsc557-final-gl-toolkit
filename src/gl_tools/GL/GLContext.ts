@@ -114,11 +114,15 @@ export class GLContext {
     constructor(context: WebGLRenderingContext | WebGL2RenderingContext) {
         this.context = context;
         this._version = (context instanceof WebGL2RenderingContext) ? 2 : 1;
+        this.context.disable(this.context.CULL_FACE);
+        this.context.enable(this.context.DEPTH_TEST);
+        this.context.enable(this.context.BLEND);
+        this.context.blendFunc(this.context.SRC_ALPHA, this.context.ONE_MINUS_SRC_ALPHA);
     }
 
     /**
      * @brief Predicate to determine if this instance is capable of WebGL2
-     *        functionality.
+     *        functionality
      * 
      * @returns True if this can use WebGL2 functionality, otherwise false
      */
@@ -143,10 +147,8 @@ export class GLContext {
     makeGenericShaderProgram() {
         try {
             const vertexShader = makeGenericVertexShader(this._version);
-            console.log(`Vertex Shader:\n\n${vertexShader.text}\n\n`);
             if (!vertexShader.isVertexShader()) throw new Error("vertexShader is not a vertex shader");
             const fragmentShader = makeGenericFragmentShader(this._version);
-            console.log(`Fragment Shader:\n\n${fragmentShader.text}\n\n`);
             if (!fragmentShader.isFragmentShader()) throw new Error("fragmentShader is not a fragment shader");
             const program = new ShaderProgram(this.context, vertexShader, fragmentShader);
             return program;
@@ -176,7 +178,7 @@ export class GLContext {
     }
 
     /**
-     * @brief Packs a shape into WebGL buffers using this context.
+     * @brief Packs a shape into WebGL buffers using this context
      * 
      * @param shape Shape to pack
      */
@@ -246,7 +248,7 @@ export class GLContext {
             textureCoordinateBuffer: textureCoordinateBuffer,
             indexBuffer: indexBuffer,
             indexType: indexType,
-            indexCount: shape.vertexCount(),
+            indexCount: shape.indexCount(),
             destroy: () => {
                 this.context.deleteBuffer(vertexBuffer);
                 this.context.deleteBuffer(normalBuffer);
@@ -256,6 +258,12 @@ export class GLContext {
         } as PackedGLShape;
     }
 
+    /**
+     * @brief Packs raw data into a WebGL buffer
+     * 
+     * @param data Array of Float32Arrays to pack
+     * @returns A packed WebGL buffer
+     */
     packData(data: Float32Array[]) {
 
         // Pack buffer
@@ -274,15 +282,22 @@ export class GLContext {
         } as PackedGLBuffer;
     }
 
+    /**
+     * @brief Draws a render object to the screen
+     * 
+     * @param object The object to draw
+     */
     drawObject(object: RenderObject) {
 
-        console.log("GLContext: Draw Object");
         const topology = object.shape.packedTopology();
         this.context.bindBuffer(this.context.ARRAY_BUFFER, topology.vertexBuffer);
         this.context.bindBuffer(this.context.ELEMENT_ARRAY_BUFFER, topology.indexBuffer);
         this.context.drawElements(this.context.TRIANGLES, topology.indexCount, topology.indexType, 0);
     }
 
+    /**
+     * @brief Clears the color and depth buffers
+     */
     clear() {
         this.context.clear(this.context.COLOR_BUFFER_BIT | this.context.DEPTH_BUFFER_BIT)
     }
