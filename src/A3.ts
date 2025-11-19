@@ -32,25 +32,25 @@ window.onload = async () => {
         alert(`Error: Element ${ROTATE_X_ID} is not a button`);
         return;
     }
-    rotateX.onclick = scene.toggleXRotation.bind(scene);
+    rotateX.addEventListener("click", scene.toggleXRotation.bind(scene));
     const rotateY = document.getElementById(ROTATE_Y_ID);
     if (!(rotateY instanceof HTMLButtonElement)) {
         alert(`Error: Element ${ROTATE_Y_ID} is not a button`);
         return;
     }
-    rotateY.onclick = scene.toggleYRotation.bind(scene);
+    rotateY.addEventListener("click", scene.toggleYRotation.bind(scene));
     const rotateZ = document.getElementById(ROTATE_Z_ID);
     if (!(rotateZ instanceof HTMLButtonElement)) {
         alert(`Error: Element ${ROTATE_Z_ID} is not a button`);
         return;
     }
-    rotateZ.onclick = scene.toggleZRotation.bind(scene);
+    rotateZ.addEventListener("click", scene.toggleZRotation.bind(scene));
     const downloadVertexShader = document.getElementById(DOWNLOAD_VERTEX_SHADER);
     if (!(downloadVertexShader instanceof HTMLButtonElement)) {
         alert(`Error: Element ${DOWNLOAD_VERTEX_SHADER} is not a button`);
         return;
     }
-    downloadVertexShader.onclick = () => {
+    downloadVertexShader.addEventListener("click", () => {
         const vertexShader = scene.vertexShaderUrl;
         if (!vertexShader) {
             alert("Error: Vertex shader URL not found");
@@ -60,13 +60,13 @@ window.onload = async () => {
         link.href = vertexShader;
         link.download = "vertexShader.glsl";
         link.click();
-    };
+    });
     const downloadFragmentShader = document.getElementById(DOWNLOAD_FRAGMENT_SHADER);
     if (!(downloadFragmentShader instanceof HTMLButtonElement)) {
         alert(`Error: Element ${DOWNLOAD_FRAGMENT_SHADER} is not a button`);
         return;
     }
-    downloadFragmentShader.onclick = () => {
+    downloadFragmentShader.addEventListener("click", () => {
         const fragmentShader = scene.fragmentShaderUrl;
         if (!fragmentShader) {
             alert("Error: Fragment shader URL not found");
@@ -76,7 +76,7 @@ window.onload = async () => {
         link.href = fragmentShader;
         link.download = "fragmentShader.glsl";
         link.click();
-    };
+    });
 
     app.start(canvas);
 }
