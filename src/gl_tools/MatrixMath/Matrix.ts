@@ -140,12 +140,14 @@ export class Matrix3 extends Float32Array {
      */
     multiply(other: Matrix3) {
         const newMatrix = new Matrix3();
-        const myRows = this.rows();
-        const otherColumns = other.columns();
 
         for (let row = 0; row < 3; ++row) {
             for (let column = 0; column < 3; ++column) {
-                newMatrix[Matrix3.index(row, column)] = myRows[row].dot(otherColumns[column]);
+                let rowDotColumn = 0;
+                for (let i = 0; i < 3; ++i) {
+                    rowDotColumn += this[Matrix3.index(row, i)] * other[Matrix3.index(i, column)];
+                }
+                newMatrix[Matrix3.index(row, column)] = rowDotColumn;
             }
         }
 
@@ -504,12 +506,14 @@ export class Matrix4 extends Float32Array {
      */
     multiply(other: Matrix4) {
         const newMatrix = new Matrix4();
-        const myRows = this.rows();
-        const otherColumns = other.columns();
 
         for (let row = 0; row < 4; ++row) {
             for (let column = 0; column < 4; ++column) {
-                newMatrix[(column * 4) + row] = myRows[row].dot(otherColumns[column]);
+                let rowDotColumn = 0;
+                for (let i = 0; i < 4; ++i) {
+                    rowDotColumn += this[Matrix4.index(row, i)] * other[Matrix4.index(i, column)];
+                }
+                newMatrix[Matrix4.index(row, column)] = rowDotColumn;
             }
         }
 
