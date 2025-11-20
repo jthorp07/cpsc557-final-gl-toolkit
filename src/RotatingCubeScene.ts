@@ -4,7 +4,7 @@
  * @brief A scene demonstrating a rotating cube with user controls.
  */
 
-import { Scene, Cube, GLVersion, GLColor, Vector3, Transform, Plane } from "./gl_tools/index.js";
+import { Scene, Cube, GLVersion, GLColor, Vector3, Transform, Plane, RectangularPyramid } from "./gl_tools/index.js";
 
 // Control Variables
 const RotationAxes = {
@@ -154,6 +154,14 @@ export class RotatingCubeScene extends Scene {
             ]);
         })
         this.instantiateObject("cube", "cube");
+
+        // Create Pyramid
+        this.registerShape("pyramid", new RectangularPyramid(1, 1, 1));
+        this.withShape("pyramid", (pyramid) => {
+            pyramid.staticTranslate(Vector3.NormalY.negated(true));
+            pyramid.setColor(GLColor.Black);
+        });
+        this.instantiateObject("pyramid", "pyramid");
 
         // Create Floor Plane
         this.registerShape("floor", Plane.makeYPlane(10, 10));
