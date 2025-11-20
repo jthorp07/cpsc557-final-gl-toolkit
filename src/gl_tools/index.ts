@@ -30,6 +30,6 @@ export {
     Matrix3, Matrix4, Transform
 } from "./MatrixMath/index.js";
 export {
-    BaseShape, Cube, Sphere, Plane, RectangularPyramid,
+    BaseShape, Box, Cube, Sphere, Plane, RectangularPyramid,
     GLColor, BaseTexture, SolidColorTexture, PerVertexColorTexture
 } from "./Prefabs/index.js";
