@@ -35,6 +35,7 @@ export class GLCamera {
     get viewMatrix() { return this._viewMatrix; };
     get projectionMatrix() { return this._projectionMatrix; };
     get position() { return this._position; };
+    get lookDirection() { return this._target.subtract(this._position).normalized(true); };
 
     move(movementVector: Vector3) {
         this._position.add(movementVector, true);
