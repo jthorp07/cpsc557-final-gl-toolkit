@@ -106,7 +106,7 @@ export class BaseShape {
 
         // Transform
         let newVertices: Vector3[] = [];
-        for (let i = 0; i < this._indexCount; ++i) {
+        for (let i = 0; i < this._vertexCount; ++i) {
             const originalPoint = new Vector4(
                 this._vertices[i].x,
                 this._vertices[i].y,
