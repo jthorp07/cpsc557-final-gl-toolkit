@@ -16,13 +16,13 @@ function planeVertices(width: number, height: number) {
     return [
         // Facing +Z
         new Vector3(dX, dY, 0),
-        new Vector3(dX, -dY, 0),
-        new Vector3(-dX, dY, 0),
         new Vector3(-dX, -dY, 0),
-        // Facing -Z
-        new Vector3(dX, dY, 0),
-        new Vector3(dX, -dY, 0),
         new Vector3(-dX, dY, 0),
+        new Vector3(dX, -dY, 0),
+        // Facing -Z
+        new Vector3(-dX, dY, 0),
+        new Vector3(dX, -dY, 0),
+        new Vector3(dX, dY, 0),
         new Vector3(-dX, -dY, 0),
     ];
 }
@@ -45,11 +45,11 @@ function planeNormals() {
 function planeRelativeIndices() {
     return [
         // Facing +Z
-        0, 1, 2,
         0, 2, 3,
+        2, 1, 3,
         // Facing -Z
-        4, 5, 6,
         4, 6, 7,
+        6, 5, 7,
     ];
 }
 
