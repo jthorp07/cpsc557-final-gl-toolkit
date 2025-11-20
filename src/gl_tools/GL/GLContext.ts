@@ -114,7 +114,6 @@ export class GLContext {
     constructor(context: WebGLRenderingContext | WebGL2RenderingContext) {
         this.context = context;
         this._version = (context instanceof WebGL2RenderingContext) ? 2 : 1;
-        this.context.disable(this.context.CULL_FACE);
         this.context.enable(this.context.DEPTH_TEST);
         this.context.enable(this.context.BLEND);
         this.context.blendFunc(this.context.SRC_ALPHA, this.context.ONE_MINUS_SRC_ALPHA);
