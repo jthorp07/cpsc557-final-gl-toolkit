@@ -4,7 +4,7 @@
  * @brief A scene demonstrating a rotating cube with user controls.
  */
 
-import { Scene, Cube, GLVersion, GLColor, Vector3, Transform, Plane, RectangularPyramid } from "./gl_tools/index.js";
+import { Scene, Cube, GLVersion, GLColor, Vector3, Transform, Plane, RectangularPyramid, Box } from "./gl_tools/index.js";
 
 // Control Variables
 const RotationAxes = {
@@ -19,7 +19,7 @@ const CameraMoveDirections = {
     Left: 1 << 2,
     Right: 1 << 3
 } as const;
-const CAMERA_VELOCITY = 1.2 as const;
+const CAMERA_VELOCITY = 2 as const;
 
 /**
  * @class RotatingCubeScene
@@ -164,36 +164,36 @@ export class RotatingCubeScene extends Scene {
         this.instantiateObject("pyramid", "pyramid");
 
         // Create Floor Plane
-        this.registerShape("floor", Plane.makeYPlane(10, 10));
+        this.registerShape("floor", new Box(10, 1, 10));
         this.withShape("floor", (floor) => {
             floor.setColor(GLColor.White);
-            floor.staticTranslate(new Vector3(0, -1, 0));
+            floor.staticTranslate(new Vector3(0, -1.5, 0));
         });
         this.instantiateObject("floor", "floor");
 
         // Create Wall Planes
-        this.registerShape("neg_z_wall", Plane.makeZPlane(10, 3));
+        this.registerShape("neg_z_wall", new Box(1, 3, 10));
         this.withShape("neg_z_wall", (wall) => {
             wall.setColor(GLColor.White);
-            wall.staticTranslate(new Vector3(0, 0, -5));
+            wall.staticTranslate(new Vector3(0, 0, -5.5));
         });
         this.instantiateObject("neg_z_wall", "neg_z_wall");
-        this.registerShape("pos_z_wall", Plane.makeZPlane(10, 3));
+        this.registerShape("pos_z_wall", new Box(1, 3, 10));
         this.withShape("pos_z_wall", (wall) => {
             wall.setColor(GLColor.White);
-            wall.staticTranslate(new Vector3(0, 0, 5));
+            wall.staticTranslate(new Vector3(0, 0, 5.5));
         });
         this.instantiateObject("pos_z_wall", "pos_z_wall");
-        this.registerShape("neg_x_wall", Plane.makeXPlane(10, 3));
+        this.registerShape("neg_x_wall", new Box(10, 3, 1));
         this.withShape("neg_x_wall", (wall) => {
             wall.setColor(GLColor.White);
-            wall.staticTranslate(new Vector3(-5, 0, 0));
+            wall.staticTranslate(new Vector3(-5.5, 0, 0));
         });
         this.instantiateObject("neg_x_wall", "neg_x_wall");
-        this.registerShape("pos_x_wall", Plane.makeXPlane(10, 3));
+        this.registerShape("pos_x_wall", new Box(10, 3, 1));
         this.withShape("pos_x_wall", (wall) => {
             wall.setColor(GLColor.White);
-            wall.staticTranslate(new Vector3(5, 0, 0));
+            wall.staticTranslate(new Vector3(5.5, 0, 0));
         });
         this.instantiateObject("pos_x_wall", "pos_x_wall");
     }
