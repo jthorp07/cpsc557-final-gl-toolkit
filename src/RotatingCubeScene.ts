@@ -4,6 +4,7 @@
  * @brief A scene demonstrating a rotating cube with user controls.
  */
 
+import { Input } from "./gl_tools/Core/Input.js";
 import { Scene, Cube, GLVersion, GLColor, Vector3, Transform, Plane, RectangularPyramid, Box } from "./gl_tools/index.js";
 
 // Control Variables
@@ -13,12 +14,6 @@ const RotationAxes = {
     Z: 1 << 2,
 } as const;
 
-const CameraMoveDirections = {
-    Forward: 1,
-    Backward: 1 << 1,
-    Left: 1 << 2,
-    Right: 1 << 3
-} as const;
 const CAMERA_VELOCITY = 2 as const;
 
 /**
@@ -33,7 +28,6 @@ export class RotatingCubeScene extends Scene {
     private radiansPerSecond = Transform.degreesToRadians(360 / 3);
 
     // Camera Animation Data
-    private cameraMoveDirection = 0;
     private yaw = -90;
     private pitch = 0;
     private mouseSensitivity = 0.1;
@@ -71,68 +65,10 @@ export class RotatingCubeScene extends Scene {
         }
     }
 
-    private setupInput() {
-
-        // WASD Movement
-        document.addEventListener("keydown", (event) => {
-            switch (event.key.toLowerCase()) {
-                case "w":
-                    this.cameraMoveDirection |= CameraMoveDirections.Forward; 
-                    break;
-                case "s":
-                    this.cameraMoveDirection |= CameraMoveDirections.Backward; 
-                    break;
-                case "a":
-                    this.cameraMoveDirection |= CameraMoveDirections.Left; 
-                    break;
-                case "d":
-                    this.cameraMoveDirection |= CameraMoveDirections.Right; 
-                    break;
-            }
-        });
-        document.addEventListener("keyup", (event) => {
-            switch (event.key.toLowerCase()) {
-                case "w":
-                    this.cameraMoveDirection &= ~CameraMoveDirections.Forward; 
-                    break;
-                case "s":
-                    this.cameraMoveDirection &= ~CameraMoveDirections.Backward; 
-                    break;
-                case "a":
-                    this.cameraMoveDirection &= ~CameraMoveDirections.Left; 
-                    break;
-                case "d":
-                    this.cameraMoveDirection &= ~CameraMoveDirections.Right; 
-                    break;
-            }
-        });
-
-        // Lock mouse when canvas focused
-        const canvas = document.querySelector("canvas");
-        if (canvas) {
-            canvas.addEventListener("click", () => {
-                canvas.requestPointerLock();
-            });
-        }
-
-        // Update pitch and yaw on mouse movement while canvas focused
-        document.addEventListener("mousemove", (event) => {
-            if (document.pointerLockElement === canvas) {
-                this.yaw += event.movementX * this.mouseSensitivity;
-                this.pitch -= event.movementY * this.mouseSensitivity;
-                if (this.pitch > 89) this.pitch = 89;
-                if (this.pitch < -89) this.pitch = -89;
-            }
-        });
-    }
-
     /**
      * @brief Initializes the scene, camera, and shapes.
      */
     init(): void {
-    
-        // Setup movement and look controls
-        this.setupInput();
 
         // Move Camera Back Initially
         this.withCamera((camera) => {
@@ -234,10 +170,17 @@ export class RotatingCubeScene extends Scene {
 
     private processMoveCamera(delta: number) {
         this.withCamera((camera) => {
+
+            // Update pitch and yaw
+            const mouseDelta = Input.MouseMove;
+            this.yaw += mouseDelta.dX * this.mouseSensitivity;
+            this.pitch -= mouseDelta.dY * this.mouseSensitivity;
+            if (this.pitch > 89) this.pitch = 89;
+            if (this.pitch < -89) this.pitch = -89;
+
             // Calculate Look Direction
             const yawRadians = Transform.degreesToRadians(this.yaw);
             const pitchRadians = Transform.degreesToRadians(this.pitch);
-
             const lookDirection = new Vector3(
                 Math.cos(yawRadians) * Math.cos(pitchRadians),
                 Math.sin(pitchRadians),
@@ -250,10 +193,10 @@ export class RotatingCubeScene extends Scene {
 
             const movement = new Vector3();
 
-            if (this.cameraMoveDirection & CameraMoveDirections.Forward) movement.add(moveForward, true);
-            if (this.cameraMoveDirection & CameraMoveDirections.Backward) movement.subtract(moveForward, true);
-            if (this.cameraMoveDirection & CameraMoveDirections.Right) movement.add(moveRight, true);
-            if (this.cameraMoveDirection & CameraMoveDirections.Left) movement.subtract(moveRight, true);
+            if (Input.WPressed) movement.add(moveForward, true);
+            if (Input.SPressed) movement.subtract(moveForward, true);
+            if (Input.DPressed) movement.add(moveRight, true);
+            if (Input.APressed) movement.subtract(moveRight, true);
 
             if (movement.magnitude() > 0) {
                 movement.normalized(true).scaled(CAMERA_VELOCITY * delta, true);

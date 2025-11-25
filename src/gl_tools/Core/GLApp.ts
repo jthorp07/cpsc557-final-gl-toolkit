@@ -6,6 +6,7 @@
 
 import { GLContext } from "../GL/GLContext.js";
 import { assertNotUndefined } from "./Assert.js";
+import { Input } from "./Input.js";
 import { Scene } from "./Scene.js";
 
 /**
@@ -40,6 +41,9 @@ export class GLApp {
         const requiredVersion = this.scene.requiredWebGLVersion();
         const context = GLContext.initializeWithContext(canvas, { version: requiredVersion });
         assertNotUndefined(context);
+
+        // Initialize input
+        Input.initialize(canvas);
 
         // Initialize scene and render loop
         this.scene.context = context;
